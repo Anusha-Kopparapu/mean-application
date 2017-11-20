@@ -1,0 +1,22 @@
+{
+  "name": "mean-application",
+  "version": "1.0.0",
+  "description": "learing mean application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anusha-Kopparapu/mean-application.git"
+  },
+  "author": "Anusha K",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Anusha-Kopparapu/mean-application/issues"
+  },
+  "homepage": "https://github.com/Anusha-Kopparapu/mean-application#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
