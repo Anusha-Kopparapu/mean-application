@@ -146,7 +146,14 @@ next();
  
    });
  });
+
    
+  // test route to make sure everything is working 
+   // accessed at GET http://localhost:8080/api
+  apiRouter.get('/ma', function(req, res) {
+   res.json({ message: 'hooray! welcome to our api!' }); 
+   });
+  
  apiRouter.route('/users')
  
     // create a user (accessed at POST http://localhost:8080/api/users)
@@ -243,4 +250,44 @@ next();
     
             res.json({ message: 'Successfully deleted' });
             });
+        });
+        apiRouter.use(function(req, res, next) {
+          
+          // check header or url parameters or post parameters for token
+            var token = req.body.token || req.param('token') || req.headers['x-access-toke\ n'];
+          
+            // decode token
+           if (token) {
+          
+             // verifies secret and checks exp
+             jwt.verify(token, superSecret, function(err, decoded) {      
+              if (err) {
+                return res.status(403).send({ 
+                     success: false, 
+                    message: 'Failed to authenticate token.' 
+                 });    
+            } else {
+               // if everything is good, save to request for use in other routes
+                  req.decoded = decoded;   
+          
+                 next();
+         
+                } 
+              });
+          
+           } else {
+          
+             // if there is no token
+              // return an HTTP response of 403 (access forbidden) and an error message
+             return res.status(403).send({ 
+                success: false, 
+                message: 'No token provided.' 
+              });
+             
+            }
+         
+           // next() used to be here
+          });
+        apiRouter.get('/me', function(req, res) {
+          res.send(req.decoded);
         });
